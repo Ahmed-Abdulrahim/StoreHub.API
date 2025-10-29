@@ -1,4 +1,7 @@
 
+using Microsoft.EntityFrameworkCore;
+using Presistance.Data;
+
 namespace StoreHub.API
 {
     public class Program
@@ -13,6 +16,9 @@ namespace StoreHub.API
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddDbContext<StoreHubDbContext>(op =>
+            op.UseSqlServer(builder.Configuration.GetConnectionString("conn1"))
+            );
 
             var app = builder.Build();
 

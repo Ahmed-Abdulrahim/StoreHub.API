@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="Context\" />
     <Folder Include="Exception\" />
-    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>

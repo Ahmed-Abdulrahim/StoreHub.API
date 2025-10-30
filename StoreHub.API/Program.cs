@@ -1,12 +1,15 @@
 
+using Domain.Contracts;
 using Microsoft.EntityFrameworkCore;
+using Presistance;
 using Presistance.Data;
+using System.Threading.Tasks;
 
 namespace StoreHub.API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -19,8 +22,12 @@ namespace StoreHub.API
             builder.Services.AddDbContext<StoreHubDbContext>(op =>
             op.UseSqlServer(builder.Configuration.GetConnectionString("conn1"))
             );
+            builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 
             var app = builder.Build();
+            using var scope = app.Services.CreateScope();
+            var initialize = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+            await initialize.Initializer();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

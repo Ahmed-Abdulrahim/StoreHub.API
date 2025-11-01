@@ -15,10 +15,10 @@ namespace Domain.Models
         public decimal Price { get; set; }
         [ForeignKey(nameof(ProductBrands))]
         public int BrandId { get; set; }
-        public ProductBrand ProductBrands { get; set; }
+        public virtual ProductBrand ProductBrands { get; set; }
         [ForeignKey(nameof(ProductTypes))]
         public int TypeId { get; set; }
-        public ProductType ProductTypes { get; set; }
+        public virtual ProductType ProductTypes { get; set; }
 
     }
 }

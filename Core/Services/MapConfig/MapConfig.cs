@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Services.MapConfig
 {
-    internal class MapConfig:Profile
+    public class MapConfig:Profile
     {
         public MapConfig()
         {

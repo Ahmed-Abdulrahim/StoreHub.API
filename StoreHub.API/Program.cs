@@ -3,6 +3,9 @@ using Domain.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Presistance;
 using Presistance.Data;
+using Services;
+using Services.Abstraction;
+using Services.MapConfig;
 using System.Threading.Tasks;
 
 namespace StoreHub.API
@@ -20,9 +23,23 @@ namespace StoreHub.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<StoreHubDbContext>(op =>
-            op.UseSqlServer(builder.Configuration.GetConnectionString("conn1"))
+            op.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("conn1"))
             );
             builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<IServiceManager, ServiceManager>();
+            builder.Services.AddAutoMapper(typeof(MapConfig));
+            string txt = "";
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(txt,
+                builder =>
+                {
+                    builder.AllowAnyOrigin();
+                    builder.AllowAnyMethod();
+                    builder.AllowAnyHeader();
+                });
+            });
 
             var app = builder.Build();
             using var scope = app.Services.CreateScope();

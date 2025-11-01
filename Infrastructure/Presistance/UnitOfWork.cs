@@ -20,6 +20,7 @@ namespace Presistance
         public UnitOfWork(StoreHubDbContext _context)
         {
             context = _context;
+            repo = new ConcurrentDictionary<string, object>();
         }
         public IGenericEntity<TEntity, TKey> GetGenericRepo<TEntity, TKey>() where TEntity : BaseEntity<TKey>
         =>(IGenericEntity<TEntity, TKey>) repo.GetOrAdd(typeof(TEntity).Name, new GenericEntityRepo<TEntity , TKey>(context));

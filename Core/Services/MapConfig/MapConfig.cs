@@ -17,7 +17,7 @@ namespace Services.MapConfig
             {
                 dest.BrandName = src.ProductBrands?.Name;
                 dest.TypeName = src.ProductTypes?.Name;
-            }).ReverseMap();
+            }).ForMember(p=>p.PictureUrl , o=>o.MapFrom<PictureUrlResolve>()).ReverseMap();
 
             CreateMap<ProductBrand, BrandDto>().ReverseMap();
             CreateMap<ProductType, TypeDto>().ReverseMap();

@@ -31,9 +31,14 @@ namespace Presistance.Repository
                  : await context.Set<TEntity>().AsNoTracking().ToListAsync();
         }
 
-        public async Task<TEntity> GetById(TKey id) => await context.Set<TEntity>().FindAsync(id);
-
-
+        public async Task<TEntity> GetById(TKey id) 
+        {
+            if (typeof(TEntity) == typeof(Product)) 
+            {
+                await context.Set<Product>().Include(p=>p.ProductBrands).FirstOrDefaultAsync();
+            }
+           return await context.Set<TEntity>().FindAsync(id);
+        }
         public void Update(TEntity model) => context.Set<TEntity>().Update(model);
        
     }

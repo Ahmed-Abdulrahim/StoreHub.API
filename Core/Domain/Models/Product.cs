@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 
 namespace Domain.Models
 {
-    public class Product :BaseEntity<int>
+    public class Product : BaseEntity<int>
     {
         public string Name { get; set; }
         public string Description { get; set; }
         public string PictureUrl { get; set; }
-        public decimal Price { get; set; }
+
+        public int Price { get; set; }
         [ForeignKey(nameof(ProductBrands))]
         public int BrandId { get; set; }
         public virtual ProductBrand ProductBrands { get; set; }

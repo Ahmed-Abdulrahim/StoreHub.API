@@ -11,8 +11,8 @@ using Presistance.Data;
 namespace Presistance.Data.Migrations
 {
     [DbContext(typeof(StoreHubDbContext))]
-    [Migration("20251111125334_CreateDabase")]
-    partial class CreateDabase
+    [Migration("20251113163728_CreateDatabase")]
+    partial class CreateDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

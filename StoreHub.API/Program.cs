@@ -23,7 +23,7 @@ namespace StoreHub.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<StoreHubDbContext>(op =>
-            op.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("conn1"))
+            op.UseSqlServer(builder.Configuration.GetConnectionString("conn1"))
             );
             builder.Services.AddScoped<IDbInitializer, DbInitializer>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();

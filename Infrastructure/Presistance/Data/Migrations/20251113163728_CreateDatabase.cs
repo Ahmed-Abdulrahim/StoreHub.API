@@ -5,7 +5,7 @@
 namespace Presistance.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateDabase : Migration
+    public partial class CreateDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -13,7 +13,6 @@ namespace Presentation.Controller
     [ApiController]
     public class ProductController(IServiceManager servicesManager) : ControllerBase
     {
-        private readonly IServiceManager servicesManager = servicesManager;
         //GetAllProduct
         [HttpGet]
         public async Task<IActionResult> GetAllProducts()
@@ -26,15 +25,15 @@ namespace Presentation.Controller
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var model = await  servicesManager.IProductService.GetProductById(id);
+            var model = await servicesManager.IProductService.GetProductById(id);
             if (model is null) return NotFound();
             return Ok(model);
-           
+
         }
 
         //GetAllBrands
         [HttpGet("GetBrands")]
-        public async Task<IActionResult> GetBrands() 
+        public async Task<IActionResult> GetBrands()
         {
             var brands = await servicesManager.IProductService.GetAllBrandsAsync();
             if (brands is null) return BadRequest();
@@ -43,7 +42,7 @@ namespace Presentation.Controller
 
         //GetAll Types
         [HttpGet("GetTypes")]
-        public async Task<IActionResult> GetTypes() 
+        public async Task<IActionResult> GetTypes()
         {
             var types = await servicesManager.IProductService.GetAllTypes();
             if (types is null) return BadRequest();

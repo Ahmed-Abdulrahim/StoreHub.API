@@ -20,7 +20,7 @@ namespace Presistance
             {
                 query = query.Where(spec.Criteria);
             }
-            spec.AddInclude.Aggregate(query, (current, include) => current.Include(include));
+            query = spec.AddInclude.Aggregate(query, (current, include) => current.Include(include));
 
             return query;
         }

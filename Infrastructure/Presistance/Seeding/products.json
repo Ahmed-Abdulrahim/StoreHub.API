@@ -114,7 +114,7 @@
   {
     "Name": "Crispy Vegetable Pakoras",
     "Description": "These vegetable pakoras are delicious. You'll love this recipe if you've ever had Japanese tempura-coated veggies. These pakoras are similar, but the spiced batter gives them a unique taste. Serve with chili sauce, mint yogurt sauce, or sweet and sour sauce. Try this recipe with other vegetables, such as sweet potatoes, broccoli, and asparagus.",
-    "Price": 189.99,
+    "Price": 189,
     "PictureUrl": "images/products/CrispyVegetablePakoras.png",
     "TypeId": 3,
     "BrandId": 2
@@ -122,7 +122,7 @@
   {
     "Name": "Vegetarian Korma",
     "Description": "This vegetable korma recipe is an easy vegetarian curry. It's rich, creamy, mildly spiced, and extremely flavorful. Serve with naan and rice.",
-    "Price": 199.99,
+    "Price": 199,
     "PictureUrl": "images/products/VegetarianKorma.png",
     "TypeId": 3,
     "BrandId": 2

@@ -22,9 +22,9 @@ namespace Services
             return models;
         }
 
-        public async Task<IEnumerable<ProductDto>> GetAllProductAsync()
+        public async Task<IEnumerable<ProductDto>> GetAllProductAsync(int? brandId, int? typeId)
         {
-            var spec = new ProductSpecification();
+            var spec = new ProductSpecification(brandId, typeId);
             var products = await unitOfWork.GetGenericRepo<Product, int>().GetAllWithSpec(spec);
             var models = map.Map<IEnumerable<ProductDto>>(products);
             return models;

@@ -15,9 +15,9 @@ namespace Presentation.Controller
     {
         //GetAllProduct
         [HttpGet]
-        public async Task<IActionResult> GetAllProducts()
+        public async Task<IActionResult> GetAllProducts(int? brandId, int? typeId)
         {
-            var models = await servicesManager.IProductService.GetAllProductAsync();
+            var models = await servicesManager.IProductService.GetAllProductAsync(brandId, typeId);
             if (models is null) return BadRequest();
             return Ok(models);
         }

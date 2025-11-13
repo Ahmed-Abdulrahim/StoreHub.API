@@ -10,7 +10,13 @@ namespace Services.Speicifications
 {
     public class ProductSpecification : BaseSpeicification<Product, int>
     {
-        public ProductSpecification() : base(null)
+        public ProductSpecification(int? brandId, int? typeId) : base
+            (
+            p =>
+            (!brandId.HasValue || p.BrandId == brandId)
+            &&
+            (!typeId.HasValue || p.TypeId == typeId)
+            )
         {
             AddIncludes();
         }

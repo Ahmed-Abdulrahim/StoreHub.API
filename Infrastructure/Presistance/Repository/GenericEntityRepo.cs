@@ -31,26 +31,28 @@ namespace Presistance.Repository
                  : await context.Set<TEntity>().AsNoTracking().ToListAsync();
         }
 
-        public Task<IEnumerable<TEntity>> GetAllWithSpec(ISpeicifications<TEntity, TKey> spec, bool trackChange = false)
-        {
-            throw new NotImplementedException();
-        }
+
 
         public async Task<TEntity> GetById(TKey id)
         {
-            if (typeof(TEntity) == typeof(Product))
-            {
-                await context.Set<Product>().Include(p => p.ProductBrands).FirstOrDefaultAsync();
-            }
             return await context.Set<TEntity>().FindAsync(id);
         }
 
-        public Task<TEntity> GetByIdWithSpec(ISpeicifications<TEntity, TKey> spec)
+        public void Update(TEntity model) => context.Set<TEntity>().Update(model);
+
+        public async Task<IEnumerable<TEntity>> GetAllWithSpec(ISpeicifications<TEntity, TKey> spec, bool trackChange = false)
         {
-            throw new NotImplementedException();
+            return await ApplySpecification(spec).ToListAsync();
+        }
+        public async Task<TEntity> GetByIdWithSpec(ISpeicifications<TEntity, TKey> spec)
+        {
+            return await ApplySpecification(spec).FirstOrDefaultAsync();
+        }
+        private IQueryable<TEntity> ApplySpecification(ISpeicifications<TEntity, TKey> spec)
+        {
+            return SpecificationEvaluator.GetQuery(context.Set<TEntity>(), spec);
         }
 
-        public void Update(TEntity model) => context.Set<TEntity>().Update(model);
 
     }
 }

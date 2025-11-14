@@ -21,9 +21,9 @@ namespace Presentation.Controller
         //priceasc
         //pricedesc
         [HttpGet]
-        public async Task<IActionResult> GetAllProducts(int? brandId, int? typeId, string? sort)
+        public async Task<IActionResult> GetAllProducts(int? brandId, int? typeId, string? sort, int? pageIndex, int? pageSize)
         {
-            var models = await servicesManager.IProductService.GetAllProductAsync(brandId, typeId, sort);
+            var models = await servicesManager.IProductService.GetAllProductAsync(brandId, typeId, sort, pageIndex, pageSize);
             if (models is null) return BadRequest();
             return Ok(models);
         }

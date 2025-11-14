@@ -28,6 +28,10 @@ namespace Presistance
             {
                 query = query.OrderByDescending(spec.OrdederByDesc);
             }
+            if (spec.Ispagination)
+            {
+                query = query.Skip(spec.Skip ?? 0).Take(spec.Take ?? 0);
+            }
 
             query = spec.AddInclude.Aggregate(query, (current, include) => current.Include(include));
 

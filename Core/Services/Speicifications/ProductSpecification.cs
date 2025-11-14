@@ -10,7 +10,7 @@ namespace Services.Speicifications
 {
     public class ProductSpecification : BaseSpeicification<Product, int>
     {
-        public ProductSpecification(int? brandId, int? typeId, string? sort) : base
+        public ProductSpecification(int? brandId, int? typeId, string? sort, int? pageIndex, int? pageSize) : base
             (
             p =>
             (!brandId.HasValue || p.BrandId == brandId)
@@ -45,6 +45,8 @@ namespace Services.Speicifications
             {
                 ApplyOrderBy(p => p.Name);
             }
+
+            ApplyPagination(pageSize, pageIndex);
         }
         public ProductSpecification(int id) : base(p => p.Id == id)
         {

@@ -53,6 +53,9 @@ namespace Presistance.Repository
             return SpecificationEvaluator.GetQuery(context.Set<TEntity>(), spec);
         }
 
-
+        public async Task<int> CountAsync(ISpeicifications<TEntity, TKey> spec)
+        {
+            return await ApplySpecification(spec).CountAsync();
+        }
     }
 }

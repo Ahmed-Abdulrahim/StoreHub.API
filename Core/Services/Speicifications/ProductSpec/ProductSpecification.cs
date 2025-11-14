@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Speicifications
+namespace Services.Speicifications.ProductSpec
 {
     public class ProductSpecification : BaseSpeicification<Product, int>
     {

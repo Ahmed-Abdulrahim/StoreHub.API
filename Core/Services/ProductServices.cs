@@ -2,7 +2,8 @@
 using Domain.Contracts;
 using Domain.Models;
 using Services.Abstraction;
-using Services.Speicifications;
+using Services.Speicifications.ProductSpec;
+using Shared;
 using Shared.Dtos;
 using System;
 using System.Collections.Generic;
@@ -22,12 +23,14 @@ namespace Services
             return models;
         }
 
-        public async Task<IEnumerable<ProductDto>> GetAllProductAsync(int? brandId, int? typeId, string? sort, int? pageIndex, int? pageSize)
+        public async Task<PaginateResponse<ProductDto>> GetAllProductAsync(int? brandId, int? typeId, string? sort, int? pageIndex, int? pageSize)
         {
             var spec = new ProductSpecification(brandId, typeId, sort, pageIndex, pageSize);
             var products = await unitOfWork.GetGenericRepo<Product, int>().GetAllWithSpec(spec);
             var models = map.Map<IEnumerable<ProductDto>>(products);
-            return models;
+            var specCount = new GetCountProduct(brandId, typeId);
+            var Count = await unitOfWork.GetGenericRepo<Product, int>().CountAsync(specCount);
+            return new PaginateResponse<ProductDto>(pageIndex, pageSize, Count, models);
         }
 
         public async Task<IEnumerable<TypeDto>> GetAllTypes()

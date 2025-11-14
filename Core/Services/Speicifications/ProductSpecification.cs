@@ -10,7 +10,7 @@ namespace Services.Speicifications
 {
     public class ProductSpecification : BaseSpeicification<Product, int>
     {
-        public ProductSpecification(int? brandId, int? typeId) : base
+        public ProductSpecification(int? brandId, int? typeId, string? sort) : base
             (
             p =>
             (!brandId.HasValue || p.BrandId == brandId)
@@ -19,6 +19,32 @@ namespace Services.Speicifications
             )
         {
             AddIncludes();
+
+            if (!string.IsNullOrEmpty(sort))
+            {
+                switch (sort.ToLower())
+                {
+                    case "nameasc":
+                        ApplyOrderBy(p => p.Name);
+                        break;
+                    case "namedesc":
+                        ApplyOrderByDescending(p => p.Name);
+                        break;
+                    case "priceasc":
+                        ApplyOrderBy(p => p.Price);
+                        break;
+                    case "pricedesc":
+                        ApplyOrderByDescending(p => p.Price);
+                        break;
+                    default:
+                        ApplyOrderBy(p => p.Name);
+                        break;
+                }
+            }
+            else
+            {
+                ApplyOrderBy(p => p.Name);
+            }
         }
         public ProductSpecification(int id) : base(p => p.Id == id)
         {

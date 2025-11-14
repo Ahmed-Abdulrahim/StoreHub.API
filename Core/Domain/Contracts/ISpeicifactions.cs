@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 
 namespace Domain.Contracts
 {
-    public interface ISpeicifications <TEntity , Tkey> where TEntity : BaseEntity<Tkey>
+    public interface ISpeicifications<TEntity, Tkey> where TEntity : BaseEntity<Tkey>
     {
-        Expression<Func<TEntity , bool>>? Criteria { get; set; }
+        Expression<Func<TEntity, bool>>? Criteria { get; set; }
         List<Expression<Func<TEntity, object>>> AddInclude { get; set; }
+        public Expression<Func<TEntity, object>>? OrdederByAsc { get; set; }
+        public Expression<Func<TEntity, object>>? OrdederByDesc { get; set; }
     }
 }

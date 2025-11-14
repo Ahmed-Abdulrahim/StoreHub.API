@@ -14,10 +14,16 @@ namespace Presentation.Controller
     public class ProductController(IServiceManager servicesManager) : ControllerBase
     {
         //GetAllProduct
+
+        //sort
+        //nameasc
+        //namedesc
+        //priceasc
+        //pricedesc
         [HttpGet]
-        public async Task<IActionResult> GetAllProducts(int? brandId, int? typeId)
+        public async Task<IActionResult> GetAllProducts(int? brandId, int? typeId, string? sort)
         {
-            var models = await servicesManager.IProductService.GetAllProductAsync(brandId, typeId);
+            var models = await servicesManager.IProductService.GetAllProductAsync(brandId, typeId, sort);
             if (models is null) return BadRequest();
             return Ok(models);
         }

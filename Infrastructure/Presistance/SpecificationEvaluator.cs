@@ -20,6 +20,15 @@ namespace Presistance
             {
                 query = query.Where(spec.Criteria);
             }
+            if (spec.OrdederByAsc is not null)
+            {
+                query = query.OrderBy(spec.OrdederByAsc);
+            }
+            else if (spec.OrdederByDesc is not null)
+            {
+                query = query.OrderByDescending(spec.OrdederByDesc);
+            }
+
             query = spec.AddInclude.Aggregate(query, (current, include) => current.Include(include));
 
             return query;

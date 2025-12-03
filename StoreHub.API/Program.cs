@@ -6,6 +6,7 @@ using Presistance.Data;
 using Services;
 using Services.Abstraction;
 using Services.MapConfig;
+using StoreHub.API.MiddelWare;
 using System.Threading.Tasks;
 
 namespace StoreHub.API
@@ -42,6 +43,8 @@ namespace StoreHub.API
             });
 
             var app = builder.Build();
+
+            app.UseMiddleware<GlobalErrorMiddleware>();
             using var scope = app.Services.CreateScope();
             var initialize = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
             await initialize.Initializer();

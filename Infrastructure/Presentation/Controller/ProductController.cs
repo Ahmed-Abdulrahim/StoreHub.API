@@ -33,7 +33,7 @@ namespace Presentation.Controller
         public async Task<IActionResult> GetById(int id)
         {
             var model = await servicesManager.IProductService.GetProductById(id);
-            if (model is null) return NotFound(new ApiResponse(404));
+            //if (model is null) return NotFound(new ApiResponse(404));
             return Ok(model);
 
         }

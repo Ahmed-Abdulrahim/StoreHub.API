@@ -22,6 +22,8 @@ namespace StoreHub.API.MiddelWare
             catch (Exception ex)
             {
                 logger.LogError(ex, ex.Message);
+
+                context.Response.ContentType = "application/json";
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 var response = new ApiResponse(500, ex.Message);
                 await context.Response.WriteAsJsonAsync(response);

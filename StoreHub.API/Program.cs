@@ -1,5 +1,7 @@
 
 using Domain.Contracts;
+using Domain.Exception;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Presistance;
 using Presistance.Data;
@@ -41,6 +43,35 @@ namespace StoreHub.API
                     builder.AllowAnyHeader();
                 });
             });
+
+            #region Handel ValidationErrors
+
+            builder.Services.Configure<ApiBehaviorOptions>(config =>
+    {
+        config.InvalidModelStateResponseFactory = (actioResuilt) =>
+        {
+            actioResuilt.ModelState.Where(m => m.Value.Errors.Any()).Select(m => new
+            {
+                m.Key,
+                m.Value.Errors
+            });
+            var errors = actioResuilt.ModelState
+                .Where(e => e.Value.Errors.Count > 0)
+                .Select(e => new ValidationError()
+                {
+                    Field = e.Key,
+                    Message = e.Value.Errors.Select(er => er.ErrorMessage)
+                });
+            var response = new ValidationErrorResponse
+            {
+                Errors = errors
+            };
+            return new BadRequestObjectResult(response);
+        };
+
+    });
+
+            #endregion
 
             var app = builder.Build();
 

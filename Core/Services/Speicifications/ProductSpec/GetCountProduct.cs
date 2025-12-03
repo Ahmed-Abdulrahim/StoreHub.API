@@ -12,6 +12,7 @@ namespace Services.Speicifications.ProductSpec
         public GetCountProduct(int? brandId, int? typeId) : base
             (
             p =>
+            //tring.IsNullOrEmpty(search) || p.Name.ToLower().Contains(search)) &&
             (!brandId.HasValue || p.BrandId == brandId)
             &&
             (!typeId.HasValue || p.TypeId == typeId)

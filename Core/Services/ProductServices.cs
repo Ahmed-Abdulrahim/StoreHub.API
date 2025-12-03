@@ -23,14 +23,14 @@ namespace Services
             return models;
         }
 
-        public async Task<PaginateResponse<ProductDto>> GetAllProductAsync(int? brandId, int? typeId, string? sort, int? pageIndex, int? pageSize)
+        public async Task<PaginateResponse<ProductDto>> GetAllProductAsync(ProductRequestDto model)
         {
-            var spec = new ProductSpecification(brandId, typeId, sort, pageIndex, pageSize);
+            var spec = new ProductSpecification(model);
             var products = await unitOfWork.GetGenericRepo<Product, int>().GetAllWithSpec(spec);
             var models = map.Map<IEnumerable<ProductDto>>(products);
-            var specCount = new GetCountProduct(brandId, typeId);
+            var specCount = new GetCountProduct(model.BrandId, model.typeId);
             var Count = await unitOfWork.GetGenericRepo<Product, int>().CountAsync(specCount);
-            return new PaginateResponse<ProductDto>(pageIndex, pageSize, Count, models);
+            return new PaginateResponse<ProductDto>(model.pageIndex, model.pageSize, Count, models);
         }
 
         public async Task<IEnumerable<TypeDto>> GetAllTypes()

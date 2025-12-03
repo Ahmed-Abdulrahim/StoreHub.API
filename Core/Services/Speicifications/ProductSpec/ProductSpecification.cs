@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Shared.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,19 +11,25 @@ namespace Services.Speicifications.ProductSpec
 {
     public class ProductSpecification : BaseSpeicification<Product, int>
     {
-        public ProductSpecification(int? brandId, int? typeId, string? sort, int? pageIndex, int? pageSize) : base
+
+        public ProductSpecification() : base(null)
+        {
+            AddIncludes();
+        }
+        public ProductSpecification(ProductRequestDto model) : base
             (
             p =>
-            (!brandId.HasValue || p.BrandId == brandId)
+            (string.IsNullOrEmpty(model.Search) || p.Name.ToLower().Contains(model.Search)) &&
+            (!model.BrandId.HasValue || p.BrandId == model.BrandId)
             &&
-            (!typeId.HasValue || p.TypeId == typeId)
+            (!model.typeId.HasValue || p.TypeId == model.typeId)
             )
         {
             AddIncludes();
 
-            if (!string.IsNullOrEmpty(sort))
+            if (!string.IsNullOrEmpty(model.Sort))
             {
-                switch (sort.ToLower())
+                switch (model.Sort.ToLower())
                 {
                     case "nameasc":
                         ApplyOrderBy(p => p.Name);
@@ -46,7 +53,7 @@ namespace Services.Speicifications.ProductSpec
                 ApplyOrderBy(p => p.Name);
             }
 
-            ApplyPagination(pageSize, pageIndex);
+            ApplyPagination(model.pageSize, model.pageIndex);
         }
         public ProductSpecification(int id) : base(p => p.Id == id)
         {

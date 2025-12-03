@@ -10,7 +10,7 @@ namespace Services.Abstraction
 {
     public interface IProductService
     {
-        Task<PaginateResponse<ProductDto>> GetAllProductAsync(int? brandId, int? typeId, string? sort, int? pageIndex, int? pageSize);
+        Task<PaginateResponse<ProductDto>> GetAllProductAsync(ProductRequestDto model);
         //GetById
         Task<ProductDto> GetProductById(int id);
         //GetAll Brand

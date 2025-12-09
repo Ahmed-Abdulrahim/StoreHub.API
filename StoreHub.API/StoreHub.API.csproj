@@ -16,8 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Infrastructure\Presentation\Presentation.csproj" />
-    <ProjectReference Include="..\Infrastructure\Presistance\Presistance.csproj" />
+    <ProjectReference Include="..\StoreHub.Application\StoreHub.Application.csproj" />
   </ItemGroup>
 
 </Project>

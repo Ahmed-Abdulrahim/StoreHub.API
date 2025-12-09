@@ -1,16 +1,5 @@
-
-using Domain.Contracts;
-using Domain.Exception;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Presistance;
-using Presistance.Data;
-using Services;
-using Services.Abstraction;
-using Services.MapConfig;
 using StoreHub.API.Extension;
-using StoreHub.API.MiddelWare;
-using System.Threading.Tasks;
+
 
 namespace StoreHub.API
 {

@@ -2,6 +2,7 @@
 using Services.Abstraction;
 using Shared;
 using Shared.Dtos;
+using StoreHub.API.Errors;
 using System;
 using System.Collections.Generic;
 using System.Linq;

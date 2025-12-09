@@ -1,6 +1,6 @@
-﻿using Domain.Exception;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using StoreHub.API.Errors;
 
 namespace StoreHub.API.Extension
 {

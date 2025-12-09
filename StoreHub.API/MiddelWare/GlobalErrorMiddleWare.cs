@@ -1,4 +1,5 @@
-﻿using Shared;
+﻿
+using StoreHub.API.Errors;
 
 namespace StoreHub.API.MiddelWare
 {

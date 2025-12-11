@@ -33,6 +33,7 @@ namespace StoreHub.API.Extension
             services.AddScoped<ICacheService, CacheService>();
             services.AddScoped<ICustomBasketRepository, CustomBasketRepository>();
             services.AddScoped<ICacheRepository, CacheRepository>();
+            services.AddScoped<IAuthService, AuthService>();
             services.AddSingleton<IConnectionMultiplexer>((serviceProvider) =>
             {
                 return ConnectionMultiplexer.Connect(configuration.GetConnectionString("Redis")!);

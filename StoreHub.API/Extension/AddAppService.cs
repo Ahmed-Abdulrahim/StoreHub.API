@@ -11,6 +11,7 @@ namespace StoreHub.API.Extension
             using var scope = app.Services.CreateScope();
             var initialize = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
             await initialize.Initializer();
+            await initialize.IdentityInitializer();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

@@ -1,4 +1,5 @@
 ﻿using Domain.Contracts;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Presistance;
 using Presistance.Data;
@@ -8,6 +9,8 @@ using StackExchange.Redis;
 using StoreHub.Application.Services;
 using StoreHub.Application.Services.Contracts;
 using StoreHub.Core.Contracts;
+using StoreHub.Core.Models.Identity;
+using StoreHub.Infrastructure.Identity;
 using StoreHub.Infrastructure.Repository;
 
 namespace StoreHub.API.Extension
@@ -18,6 +21,11 @@ namespace StoreHub.API.Extension
         {
             services.AddDbContext<StoreHubDbContext>(op =>
                op.UseSqlServer(configuration.GetConnectionString("conn1")));
+            services.AddDbContext<StoreHubIdentityDbContext>(op =>
+               op.UseSqlServer(configuration.GetConnectionString("conn2")));
+
+            services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<StoreHubIdentityDbContext>();
+
             services.AddScoped<IDbInitializer, DbInitializer>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IServiceManager, ServiceManager>();

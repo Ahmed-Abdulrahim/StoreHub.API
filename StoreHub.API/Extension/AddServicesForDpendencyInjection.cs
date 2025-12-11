@@ -7,6 +7,7 @@ using Services.Abstraction;
 using StackExchange.Redis;
 using StoreHub.Application.Services;
 using StoreHub.Application.Services.Contracts;
+using StoreHub.Core.Contracts;
 using StoreHub.Infrastructure.Repository;
 
 namespace StoreHub.API.Extension
@@ -21,7 +22,9 @@ namespace StoreHub.API.Extension
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IServiceManager, ServiceManager>();
             services.AddScoped<ICustomBasketService, CustomBasketService>();
+            services.AddScoped<ICacheService, CacheService>();
             services.AddScoped<ICustomBasketRepository, CustomBasketRepository>();
+            services.AddScoped<ICacheRepository, CacheRepository>();
             services.AddSingleton<IConnectionMultiplexer>((serviceProvider) =>
             {
                 return ConnectionMultiplexer.Connect(configuration.GetConnectionString("Redis")!);

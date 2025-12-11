@@ -1,5 +1,4 @@
-﻿
-using StoreHub.API.Errors;
+﻿using StoreHub.API.Errors;
 
 namespace StoreHub.API.MiddelWare
 {

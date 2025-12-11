@@ -1,13 +1,11 @@
-﻿namespace Domain.Models
+﻿namespace StoreHub.Application.Dtos.CustomBasket
 {
-    public class CustomBasket
+    public class CustomBasketDto
     {
         public string Id { get; set; }
-        public IEnumerable<BasketItem> Items { get; set; }
+        public IEnumerable<BasketItemDto> Items { get; set; }
     }
-
-
-    public class BasketItem
+    public class BasketItemDto
     {
         public int Id { get; set; }
         public string ProductName { get; set; }

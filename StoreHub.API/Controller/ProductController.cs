@@ -1,15 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Services.Abstraction;
-using Shared;
 using Shared.Dtos;
 using StoreHub.API.Errors;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Presentation.Controller
+
+namespace StoreHub.API.Controller
 {
     [Route("api/[controller]")]
     [ApiController]

@@ -4,6 +4,10 @@ using Presistance;
 using Presistance.Data;
 using Services;
 using Services.Abstraction;
+using StackExchange.Redis;
+using StoreHub.Application.Services;
+using StoreHub.Application.Services.Contracts;
+using StoreHub.Infrastructure.Repository;
 
 namespace StoreHub.API.Extension
 {
@@ -16,6 +20,12 @@ namespace StoreHub.API.Extension
             services.AddScoped<IDbInitializer, DbInitializer>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IServiceManager, ServiceManager>();
+            services.AddScoped<ICustomBasketService, CustomBasketService>();
+            services.AddScoped<ICustomBasketRepository, CustomBasketRepository>();
+            services.AddSingleton<IConnectionMultiplexer>((serviceProvider) =>
+            {
+                return ConnectionMultiplexer.Connect(configuration.GetConnectionString("Redis")!);
+            });
 
             return services;
         }

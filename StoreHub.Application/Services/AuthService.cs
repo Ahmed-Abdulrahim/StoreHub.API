@@ -1,17 +1,21 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Identity.Client;
+using Microsoft.IdentityModel.Tokens;
 using StoreHub.Application.Dtos.AuthDto;
 using StoreHub.Application.Services.Contracts;
 using StoreHub.Core.Models.Identity;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace StoreHub.Application.Services
 {
-    public class AuthService(UserManager<AppUser> user) : IAuthService
+    public class AuthService(UserManager<AppUser> user, IConfiguration config) : IAuthService
     {
         public async Task<UserResultDto> LoginAsync(LoginDto login)
         {
@@ -23,7 +27,7 @@ namespace StoreHub.Application.Services
             {
                 DisplayName = findUser.DisplayName,
                 Email = login.Email,
-                Token = "Token",
+                Token = GenerateJwtToken(findUser),
             };
             return result;
         }
@@ -48,9 +52,39 @@ namespace StoreHub.Application.Services
             {
                 DisplayName = AddUser.DisplayName,
                 Email = register.Email,
-                Token = "Token",
+                Token = GenerateJwtToken(AddUser),
             };
             return Data;
+        }
+
+
+
+        private string GenerateJwtToken(AppUser appUser)
+        {
+            var autClaims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.Email , appUser.Email),
+                new Claim(ClaimTypes.MobilePhone , appUser.PhoneNumber),
+            };
+
+            var role = user.GetRolesAsync(appUser);
+            foreach (var item in role.Result)
+            {
+                autClaims.Add(new Claim(ClaimTypes.Role, item));
+            }
+
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JwtToken:secretKey"]));
+            var token = new JwtSecurityToken
+                (
+                issuer: config["JwtToken:issuer"],
+                audience: config["JwtToken:audience"],
+                claims: autClaims,
+                expires: DateTime.Now.AddDays(7),
+                signingCredentials: new SigningCredentials(secretKey, algorithm: SecurityAlgorithms.HmacSha256)
+                );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+
         }
     }
 }

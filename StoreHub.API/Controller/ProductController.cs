@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Services.Abstraction;
 using Shared.Dtos;
+using StackExchange.Redis;
 using StoreHub.API.Attributes;
 using StoreHub.API.Errors;
 
@@ -20,6 +22,7 @@ namespace StoreHub.API.Controller
         //pricedesc
         [HttpGet]
         [Cache(100)]
+
         public async Task<IActionResult> GetAllProducts([FromQuery] ProductRequestDto model)
         {
             var models = await servicesManager.IProductService.GetAllProductAsync(model);

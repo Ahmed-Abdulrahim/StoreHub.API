@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using StoreHub.API.Errors;
+using StoreHub.Application.Shared;
 
 namespace StoreHub.API.Extension
 {
@@ -54,6 +55,8 @@ namespace StoreHub.API.Extension
             });
 
             ValidationErrorResponseMethod(service);
+
+            service.Configure<JwtOptions>(configuration.GetSection("JwtOptions"));
 
             return service;
 

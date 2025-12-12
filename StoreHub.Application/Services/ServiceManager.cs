@@ -2,9 +2,11 @@
 using Domain.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Services.Abstraction;
 using StoreHub.Application.Services;
 using StoreHub.Application.Services.Contracts;
+using StoreHub.Application.Shared;
 using StoreHub.Core.Contracts;
 using StoreHub.Core.Models.Identity;
 
@@ -12,13 +14,13 @@ using StoreHub.Core.Models.Identity;
 namespace Services
 {
     public class ServiceManager(ICacheRepository cacheRepository, ICustomBasketRepository basketRepository,
-        IUnitOfWork unitOfWork, IMapper map, UserManager<AppUser> user, IConfiguration config) : IServiceManager
+        IUnitOfWork unitOfWork, IMapper map, UserManager<AppUser> user, IOptions<JwtOptions> jwtOptions) : IServiceManager
     {
         public IProductService IProductService => new ProductServices(unitOfWork, map);
         public ICustomBasketService basketService => new CustomBasketService(basketRepository, map);
 
         public ICacheService cacheService => new CacheService(cacheRepository);
 
-        public IAuthService authService => new AuthService(user, config);
+        public IAuthService authService => new AuthService(user, jwtOptions);
     }
 }

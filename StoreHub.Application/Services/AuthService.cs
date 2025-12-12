@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.VisualBasic.FileIO;
 using StoreHub.Application.Dtos.AuthDto;
 using StoreHub.Application.Services.Contracts;
+using StoreHub.Application.Shared;
 using StoreHub.Core.Models.Identity;
 using System;
 using System.Collections.Generic;
@@ -15,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace StoreHub.Application.Services
 {
-    public class AuthService(UserManager<AppUser> user, IConfiguration config) : IAuthService
+    public class AuthService(UserManager<AppUser> user, IOptions<JwtOptions> jwtOptions) : IAuthService
     {
         public async Task<UserResultDto> LoginAsync(LoginDto login)
         {
@@ -56,11 +59,9 @@ namespace StoreHub.Application.Services
             };
             return Data;
         }
-
-
-
         private string GenerateJwtToken(AppUser appUser)
         {
+            var jwt = jwtOptions.Value;
             var autClaims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Email , appUser.Email),
@@ -73,11 +74,11 @@ namespace StoreHub.Application.Services
                 autClaims.Add(new Claim(ClaimTypes.Role, item));
             }
 
-            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JwtToken:secretKey"]));
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.secretKey));
             var token = new JwtSecurityToken
                 (
-                issuer: config["JwtToken:issuer"],
-                audience: config["JwtToken:audience"],
+                issuer: jwt.issuer,
+                audience: jwt.audience,
                 claims: autClaims,
                 expires: DateTime.Now.AddDays(7),
                 signingCredentials: new SigningCredentials(secretKey, algorithm: SecurityAlgorithms.HmacSha256)

@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using StoreHub.API.Errors;
 using StoreHub.Application.Shared;
+using System.Text;
 
 namespace StoreHub.API.Extension
 {
@@ -57,6 +59,26 @@ namespace StoreHub.API.Extension
             ValidationErrorResponseMethod(service);
 
             service.Configure<JwtOptions>(configuration.GetSection("JwtOptions"));
+
+            var jwtOptions = configuration.GetSection("JwtOptions").Get<JwtOptions>();
+            service.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+
+                    ValidIssuer = jwtOptions.issuer,
+                    ValidAudience = jwtOptions.audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.secretKey))
+                };
+            });
 
             return service;
 

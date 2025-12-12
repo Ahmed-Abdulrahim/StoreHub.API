@@ -22,6 +22,7 @@ namespace StoreHub.API.Controller
         //pricedesc
         [HttpGet]
         [Cache(100)]
+        [Authorize]
 
         public async Task<IActionResult> GetAllProducts([FromQuery] ProductRequestDto model)
         {

@@ -22,5 +22,7 @@ namespace Services
         public ICacheService cacheService => new CacheService(cacheRepository);
 
         public IAuthService authService => new AuthService(user, jwtOptions);
+
+        public IOrderService orderService => new OrderService(map, basketRepository, unitOfWork);
     }
 }

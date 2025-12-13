@@ -12,6 +12,6 @@ namespace StoreHub.Application.Services.Contracts
         Task<OrderResultDto> GetOrderByIdAsync(Guid id);
         Task<IEnumerable<OrderResultDto>> GetOrderByEmailAsync(string userEmail);
         Task<IEnumerable<DeliveryMethodDto>> GetAllDeliveryMethod(string userEmail);
-        Task<OrderResultDto> GetOrderByEmailAsync(OrderRequestDto orderData, string userEmail);
+        Task<OrderResultDto> CreateOrderAsync(OrderRequestDto orderData, string userEmail);
     }
 }

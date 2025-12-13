@@ -9,6 +9,7 @@ namespace StoreHub.API.Extension
         {
             services.AddAutoMapper(typeof(MapConfig));
             services.AddAutoMapper(typeof(CustomBasketProfile));
+            services.AddAutoMapper(typeof(OrderProfile));
 
             return services;
         }

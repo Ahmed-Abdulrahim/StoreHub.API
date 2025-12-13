@@ -6,18 +6,32 @@ using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using StoreHub.Core.Models.Orders;
 
 namespace Presistance.Data
 {
-    public class StoreHubDbContext:DbContext
+    public class StoreHubDbContext : DbContext
     {
-        public StoreHubDbContext(DbContextOptions<StoreHubDbContext> options):base(options)
+        public StoreHubDbContext(DbContextOptions<StoreHubDbContext> options) : base(options)
         {
-            
+
         }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductBrand> ProductBrands { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfigurationsFromAssembly(
+                typeof(StoreHubDbContext).Assembly
+            );
+        }
 
     }
 }

@@ -3,17 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Presistance.Data;
 
 #nullable disable
 
-namespace Presistance.Data.Migrations
+namespace StoreHub.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(StoreHubDbContext))]
-    partial class StoreHubDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251213115020_InitalizeOrderModule")]
+    partial class InitalizeOrderModule
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

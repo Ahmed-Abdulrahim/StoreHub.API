@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Presistance.Data;
 using StoreHub.Core.Models.Identity;
+using StoreHub.Core.Models.Orders;
 using StoreHub.Infrastructure.Identity;
 using System;
 using System.Collections.Generic;
@@ -74,7 +75,7 @@ namespace Presistance
             if (!context.ProductTypes.Any())
             {
                 // 1. Read All Data From types Json File as String
-                var TypeData = await File.ReadAllTextAsync(@"..\Infrastructure\Presistance\Seeding\types.json");
+                var TypeData = await File.ReadAllTextAsync(@"..\StoreHub.Infrastructure\Seeding\types.json");
 
                 // 2. Transform String To C# Objects [List<ProductTypes>]
                 var models = JsonSerializer.Deserialize<List<ProductType>>(TypeData);
@@ -90,7 +91,7 @@ namespace Presistance
             if (!context.ProductBrands.Any())
             {
                 // 1. Read All Data From types Json File as String
-                var BrandsTypes = await File.ReadAllTextAsync(@"..\Infrastructure\Presistance\Seeding\brands.json");
+                var BrandsTypes = await File.ReadAllTextAsync(@"..\StoreHub.Infrastructure\Seeding\brands.json");
 
                 // 2. Transform String To C# Objects [List<ProductTypes>]
                 var models = JsonSerializer.Deserialize<List<ProductBrand>>(BrandsTypes);
@@ -106,7 +107,7 @@ namespace Presistance
             if (!context.Products.Any())
             {
                 // Read All Data From Product Json
-                var ProductData = await File.ReadAllTextAsync(@"..\Infrastructure\Presistance\Seeding\products.json");
+                var ProductData = await File.ReadAllTextAsync(@"..\StoreHub.Infrastructure\Seeding\products.json");
                 //Transform Data From Json To C# Object
                 var models = JsonSerializer.Deserialize<List<Product>>(ProductData);
 
@@ -114,6 +115,22 @@ namespace Presistance
                 if (models is not null && models.Any())
                 {
                     await context.Products.AddRangeAsync(models);
+                    await context.SaveChangesAsync();
+                }
+            }
+
+            //Seeding DeliverMethods
+            if (!context.DeliveryMethods.Any())
+            {
+                // Read All Data From Product Json
+                var deliverMehtods = await File.ReadAllTextAsync(@"..\StoreHub.Infrastructure\Seeding\delivery.json");
+                //Transform Data From Json To C# Object
+                var models = JsonSerializer.Deserialize<List<DeliveryMethod>>(deliverMehtods);
+
+                //Add Data To DataBase
+                if (models is not null && models.Any())
+                {
+                    await context.DeliveryMethods.AddRangeAsync(models);
                     await context.SaveChangesAsync();
                 }
             }

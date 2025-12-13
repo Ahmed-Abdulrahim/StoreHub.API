@@ -1,0 +1,23 @@
+﻿using Domain.Models;
+
+namespace StoreHub.Core.Models.Orders
+{
+    public class OrderItem : BaseEntity<Guid>
+    {
+        public OrderItem()
+        {
+
+        }
+
+        public OrderItem(ProductInOrderItem product, int quantity, int price)
+        {
+            Product = product;
+            Quantity = quantity;
+            Price = price;
+        }
+
+        public ProductInOrderItem Product { get; set; }
+        public int Quantity { get; set; }
+        public decimal Price { get; set; }
+    }
+}

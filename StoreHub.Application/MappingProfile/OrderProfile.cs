@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using StoreHub.Application.Dtos.OrderDto;
+using StoreHub.Core.Models.Identity;
 using StoreHub.Core.Models.Orders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace StoreHub.Application.MappingProfile
 {
@@ -26,6 +23,9 @@ namespace StoreHub.Application.MappingProfile
             CreateMap<DeliveryMethod, DeliveryMethodDto>().ReverseMap();
 
             CreateMap<ShippingAddress, ShippingAddressDto>().ReverseMap();
+            CreateMap<ShippingAddressDto, Address>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.AppUserId, opt => opt.Ignore()).ReverseMap();
         }
     }
 }

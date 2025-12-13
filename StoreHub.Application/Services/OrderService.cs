@@ -19,7 +19,7 @@ namespace StoreHub.Application.Services
         public async Task<OrderResultDto> CreateOrderAsync(OrderRequestDto orderData, string userEmail)
         {
             var Address = mapper.Map<ShippingAddress>(orderData.Address);
-            var basket = await basketRepository.GetBasketAsync(orderData.BasketId.ToString());
+            var basket = await basketRepository.GetBasketAsync(orderData.BasketId);
             if (basket is null) throw new Exception("Basket not found");
             var orderItems = new List<OrderItem>();
             foreach (var item in basket.Items)
@@ -48,10 +48,10 @@ namespace StoreHub.Application.Services
             return result;
         }
 
-        public async Task<IEnumerable<DeliveryMethodDto>> GetAllDeliveryMethod(string userEmail)
+        public async Task<IEnumerable<DeliveryMethodDto>> GetAllDeliveryMethod()
         {
             var deliverymethods = await unit.GetGenericRepo<DeliveryMethod, int>().GetAll();
-            if (deliverymethods.Any()) throw new Exception("No Delivery Methods Found");
+            if (!deliverymethods.Any()) throw new Exception("No Delivery Methods Found");
             var data = mapper.Map<IEnumerable<DeliveryMethodDto>>(deliverymethods);
             return data;
         }
@@ -60,7 +60,7 @@ namespace StoreHub.Application.Services
         {
             var spec = new OrderSpecification(userEmail);
             var orders = await unit.GetGenericRepo<Order, Guid>().GetAllWithSpec(spec);
-            if (orders.Any()) throw new Exception("No Orders Found");
+            if (!orders.Any()) throw new Exception("No Orders Found");
             var result = mapper.Map<IEnumerable<OrderResultDto>>(orders);
             return result;
         }

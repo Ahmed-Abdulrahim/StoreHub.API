@@ -8,7 +8,7 @@ namespace StoreHub.Application.Dtos.OrderDto
 {
     public class OrderRequestDto
     {
-        public int BasketId { get; set; }
+        public string BasketId { get; set; }
         public ShippingAddressDto Address { get; set; }
         public int DeliveryMethodId { get; set; }
     }

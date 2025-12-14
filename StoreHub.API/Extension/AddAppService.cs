@@ -19,6 +19,7 @@ namespace StoreHub.API.Extension
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            app.UseCors("AddPolicy");
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseStaticFiles();

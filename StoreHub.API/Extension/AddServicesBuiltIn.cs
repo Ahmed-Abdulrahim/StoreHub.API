@@ -20,7 +20,7 @@ namespace StoreHub.API.Extension
             service.AddEndpointsApiExplorer();
             service.AddSwaggerGen();
 
-            string txt = "";
+            string txt = "AddPolicy";
             service.AddCors(options =>
             {
                 options.AddPolicy(txt,

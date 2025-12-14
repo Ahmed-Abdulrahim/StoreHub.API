@@ -32,7 +32,14 @@ namespace StoreHub.Application.Services
             var deliverMethod = await unit.GetGenericRepo<DeliveryMethod, int>().GetById(orderData.DeliveryMethodId);
             if (deliverMethod is null) throw new Exception("Delivery method not found");
             var subTotal = orderItems.Sum(i => i.Price * i.Quantity);
-            var order = new Order(userEmail, Address, orderItems, deliverMethod, "", subTotal);
+
+            var spec = new OrderPaymentIntentIdSpecification(basket.PaymentIntentId);
+            var existIntenId = await unit.GetGenericRepo<Order, Guid>().GetByIdWithSpec(spec);
+            if (existIntenId is not null)
+            {
+                unit.GetGenericRepo<Order, Guid>().Delete(existIntenId);
+            }
+            var order = new Order(userEmail, Address, orderItems, deliverMethod, basket.PaymentIntentId, subTotal);
             await unit.GetGenericRepo<Order, Guid>().AddAsync(order);
             var rowAffected = await unit.SaveChangeAsync();
             var result = mapper.Map<OrderResultDto>(order);

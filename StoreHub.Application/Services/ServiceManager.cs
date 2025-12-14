@@ -14,7 +14,7 @@ using StoreHub.Core.Models.Identity;
 namespace Services
 {
     public class ServiceManager(ICacheRepository cacheRepository, ICustomBasketRepository basketRepository,
-        IUnitOfWork unitOfWork, IMapper map, UserManager<AppUser> user, IOptions<JwtOptions> jwtOptions) : IServiceManager
+        IUnitOfWork unitOfWork, IMapper map, UserManager<AppUser> user, IOptions<JwtOptions> jwtOptions, IConfiguration config) : IServiceManager
     {
         public IProductService IProductService => new ProductServices(unitOfWork, map);
         public ICustomBasketService basketService => new CustomBasketService(basketRepository, map);
@@ -24,5 +24,7 @@ namespace Services
         public IAuthService authService => new AuthService(map, user, jwtOptions);
 
         public IOrderService orderService => new OrderService(map, basketRepository, unitOfWork);
+
+        public IpaymentService paymentService => new PaymentService(map, basketRepository, unitOfWork, config);
     }
 }

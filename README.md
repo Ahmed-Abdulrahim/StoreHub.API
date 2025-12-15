@@ -456,7 +456,7 @@ Contributions are welcome! Please follow these guidelines:
 
 - **Author**: Ahmed Abdulrahim
 - **GitHub**: [@Ahmed-Abdulrahim](https://github.com/Ahmed-Abdulrahim)
-- **Email**: ahmed.abdulrahim@example.com
+- **Email**: ahmedabdulrahim92001@gmail.com
 
 ### 🌟 Show Your Support
 

@@ -417,7 +417,7 @@ Contributions are welcome! Please follow these guidelines:
 
 1. **Fork the repository**
    ```bash
-   git clone https://github.com/yourusername/StoreHub.API.git
+   git clone https://github.com/Ahmed-Abdulrahim/StoreHub.API.git
    ```
 
 2. **Create a feature branch**

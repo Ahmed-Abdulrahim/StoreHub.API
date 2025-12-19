@@ -12,12 +12,8 @@
 
 - [Overview](#-overview)
 - [Features](#-features)
-- [Technologies](#-technologies)
-- [Architecture](#-architecture)
 - [Project Structure](#-project-structure)
 - [Installation](#-installation)
-- [Configuration](#-configuration)
-- [Contributing](#-contributing)
 
 ## 🎯 Overview
 
